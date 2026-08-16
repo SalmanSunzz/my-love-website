@@ -307,6 +307,18 @@ textarea {
         id="answer2"
         placeholder="พิมพ์คำตอบตรงนี้ได้เลยนะ..."
       ></textarea>
+      <div class="question">
+
+  <h2>
+    3. ถ้าเรากลับมาดีกันแล้ว อ้วนอยากให้ความสัมพันธ์ของเราเป็นแบบไหน? 💕  
+  </h2>
+
+  <textarea
+    id="answer3"
+    placeholder="พิมพ์คำตอบตรงนี้..."
+  ></textarea>
+
+</div>
 
     </div>
 
@@ -399,22 +411,59 @@ function saveAnswers() {
   const answer2 =
     document.getElementById("answer2").value;
 
-  localStorage.setItem(
-    "answer1",
-    answer1
-  );
+  const answer3 =
+    document.getElementById("answer3").value;
 
-  localStorage.setItem(
-    "answer2",
-    answer2
-  );
+  if (answer1 === "") {
+    alert("เลือกคำตอบข้อ 1 ก่อนนะ 🥺");
+    return;
+  }
 
-  alert("ขอบคุณที่ตอบเค้านะ ❤️");
+  if (answer2.trim() === "") {
+    alert("ตอบคำถามข้อ 2 ให้เค้าหน่อยนะ ❤️");
+    return;
+  }
 
-  nextPage(5);
+  if (answer3.trim() === "") {
+    alert("ตอบคำถามข้อ 3 ให้เค้าหน่อยนะ ❤️");
+    return;
+  }
+
+
+  const data = {
+    answer1: answer1,
+    answer2: answer2,
+    answer3: answer3
+  };
+
+
+  fetch("https://script.google.com/macros/s/AKfycbzoSQ_ecjO7AqQIi-XQheRJKkb04uqnyMgF24yHBaeB43lB2EpxlcCjgRP1nNPVDnZX/exec", {
+
+    method: "POST",
+
+    mode: "no-cors",
+
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
+
+    body: JSON.stringify(data)
+
+  })
+  .then(() => {
+
+    alert("ขอบคุณที่ตอบเค้านะ ❤️");
+
+    nextPage(5);
+
+  })
+  .catch(() => {
+
+    alert("ส่งคำตอบไม่สำเร็จ ลองใหม่อีกครั้งนะ 🥺");
+
+  });
 
 }
-
 
 /* คืนดี */
 
